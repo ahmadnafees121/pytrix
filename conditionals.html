@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Conditional Statements{% endblock %}
+{% block content %}
+
+<section class="page-hero container">
+  <span class="badge">Topic #08</span>
+  <h1>Conditional Statements</h1>
+  <p class="lead">Smart decision making. Python checks a condition with <code>if</code>, <code>elif</code> and <code>else</code>, then chooses what happens next. Each decision is shown below.</p>
+</section>
+
+<section class="container section">
+  <div class="grid-2">
+
+    <!-- Voting eligibility -->
+    <div class="card tilt reveal">
+      <div class="card-head">
+        <div class="card-icon">🗳️</div>
+        <div>
+          <h3>Voting eligibility</h3>
+          <p class="muted">Python checks whether the age is 18 or above.</p>
+        </div>
+      </div>
+      <form id="voteForm" novalidate>
+        <div class="field">
+          <label for="voteAge">Age</label>
+          <input id="voteAge" type="text" inputmode="numeric" placeholder="e.g. 17" autocomplete="off">
+        </div>
+        <div class="chips" data-target="voteAge">
+          <button type="button" class="chip" data-value="12">12 · child</button>
+          <button type="button" class="chip" data-value="17">17 · almost</button>
+          <button type="button" class="chip" data-value="18">18 · eligible</button>
+          <button type="button" class="chip" data-value="30">30 · adult</button>
+        </div>
+        <button class="btn btn-primary" type="submit">Check eligibility</button>
+      </form>
+      <div id="voteOut" class="result" role="status" aria-live="polite"></div>
+      <div id="voteTrace"></div>
+    </div>
+
+    <!-- Pass / fail and grade -->
+    <div class="card tilt reveal">
+      <div class="card-head">
+        <div class="card-icon">📝</div>
+        <div>
+          <h3>Pass / fail &amp; grade</h3>
+          <p class="muted">Marks from 0 to 100 decide the result and letter grade.</p>
+        </div>
+      </div>
+      <form id="resultForm" novalidate>
+        <div class="field">
+          <label for="marks">Marks</label>
+          <input id="marks" type="text" inputmode="numeric" placeholder="e.g. 82" autocomplete="off">
+        </div>
+        <div class="chips" data-target="marks">
+          <button type="button" class="chip" data-value="35">35 · fail</button>
+          <button type="button" class="chip" data-value="52">52 · D</button>
+          <button type="button" class="chip" data-value="68">68 · C</button>
+          <button type="button" class="chip" data-value="82">82 · B</button>
+          <button type="button" class="chip" data-value="95">95 · A</button>
+        </div>
+        <button class="btn btn-primary" type="submit">Calculate</button>
+      </form>
+      <div id="gradeOut"></div>
+      <div id="resultOut" class="result" role="status" aria-live="polite"></div>
+      <div id="resultTrace"></div>
+
+      <table class="grade-table">
+        <thead><tr><th>Marks</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>90 – 100</td><td><span class="grade-pill g-A">A</span></td></tr>
+          <tr><td>75 – 89</td><td><span class="grade-pill g-B">B</span></td></tr>
+          <tr><td>60 – 74</td><td><span class="grade-pill g-C">C</span></td></tr>
+          <tr><td>40 – 59</td><td><span class="grade-pill g-D">D</span></td></tr>
+          <tr><td>0 – 39</td><td><span class="grade-pill g-F">F (fail)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- Flowchart -->
+<section class="container section">
+  <div class="card reveal">
+    <div class="card-head">
+      <div class="card-icon">🔀</div>
+      <div>
+        <h3>Interactive Yes / No flowchart</h3>
+        <p class="muted">Answer each question to follow the path, just like nested <code>if</code> statements.</p>
+      </div>
+    </div>
+    <div class="flow">
+      <div id="flowNode"></div>
+      <div id="flowBranch" class="btn-row"></div>
+    </div>
+    <div id="flowPath" class="flow-path"></div>
+    <div class="center">
+      <button id="flowReset" class="btn btn-ghost" type="button">Restart flowchart</button>
+    </div>
+  </div>
+</section>
+
+<!-- Code explanation -->
+<section class="container section">
+  <div class="card reveal">
+    <h3>How the code works</h3>
+    <p class="muted">These are the real functions running on the Python backend.</p>
+    <pre class="code-block"><code>def check_voting(age):
+    if age &lt; 0:
+        return "Age cannot be negative."
+    elif age &gt;= 18:
+        return "Eligible to vote."
+    else:
+        return f"Not eligible yet. Wait {18 - age} more year(s)."
+
+def get_grade(marks):
+    if marks &gt;= 90:
+        return "A"
+    elif marks &gt;= 75:
+        return "B"
+    elif marks &gt;= 60:
+        return "C"
+    elif marks &gt;= 40:
+        return "D"
+    else:
+        return "F"</code></pre>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/conditionals.js') }}"></script>
+{% endblock %}

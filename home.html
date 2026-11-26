@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<section class="hero container">
+  <div class="hero-text reveal">
+    <span class="eyebrow">Interactive Python learning</span>
+    <h1>Learn Python by <span class="gradient-text">doing</span>.</h1>
+    <p class="lead">
+      Watch programs make decisions, read input from users and print results.
+      Every answer is calculated by a Python backend, and each step is shown to you.
+    </p>
+    <div class="btn-row">
+      <a href="{{ url_for('conditionals') }}" class="btn btn-primary">Start with Conditionals</a>
+      <a href="{{ url_for('io_console') }}" class="btn btn-ghost">Try Input &amp; Output</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong>2</strong><span>Interactive lessons</span></div>
+      <div class="stat"><strong>Python</strong><span>Powered backend</span></div>
+      <div class="stat"><strong>Live</strong><span>Step-by-step trace</span></div>
+    </div>
+  </div>
+
+  <!-- Live mini demo -->
+  <div class="mini-demo card tilt reveal">
+    <span class="badge">Quick demo</span>
+    <h3>Are you old enough to vote?</h3>
+    <p class="muted">Enter an age and Python checks <code>age &gt;= 18</code>.</p>
+    <form id="miniForm" class="inline-form" novalidate>
+      <input id="miniAge" type="text" inputmode="numeric" placeholder="Your age" autocomplete="off" aria-label="Your age">
+      <button class="btn btn-primary" type="submit">Check</button>
+    </form>
+    <div id="miniOut" class="result" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-head reveal">
+    <h2>Lessons</h2>
+    <p>Two hands-on modules with live examples and clear explanations.</p>
+  </div>
+
+  <div class="grid-2">
+    <a class="topic-card card tilt reveal" href="{{ url_for('conditionals') }}">
+      <div class="topic-icon">🔀</div>
+      <span class="badge">Topic #08</span>
+      <h3>Conditional Statements</h3>
+      <p>Smart decision making with <code>if</code>, <code>elif</code> and <code>else</code>. Check voting eligibility, calculate grades and follow a Yes/No flowchart.</p>
+      <span class="card-link">Open lesson →</span>
+    </a>
+
+    <a class="topic-card card tilt reveal" href="{{ url_for('io_console') }}">
+      <div class="topic-icon">⌨️</div>
+      <span class="badge">Topic #06</span>
+      <h3>Input &amp; Output</h3>
+      <p>Read data with <code>input()</code> and show results with <code>print()</code>. Build personalized messages, use a calculator and generate student records in a live console.</p>
+      <span class="card-link">Open lesson →</span>
+    </a>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="grid-3">
+    <div class="feature card tilt reveal">
+      <div class="feature-icon">🐍</div>
+      <h3>Python does the thinking</h3>
+      <p>Every decision and calculation runs on the server with Flask.</p>
+    </div>
+    <div class="feature card tilt reveal">
+      <div class="feature-icon">🔍</div>
+      <h3>See every step</h3>
+      <p>Decision traces show exactly which conditions were checked and why.</p>
+    </div>
+    <div class="feature card tilt reveal">
+      <div class="feature-icon">🛡️</div>
+      <h3>Safe by design</h3>
+      <p>The calculator parses expressions with <code>ast</code>, so no arbitrary code is executed.</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  (function () {
+    const form = document.getElementById("miniForm");
+    const out = document.getElementById("miniOut");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const age = document.getElementById("miniAge").value;
+      const data = await window.Lab.post("/api/vote", { age: age });
+      if (!data.ok) return window.Lab.showResult(out, window.Lab.escapeHtml(data.message), "error");
+      const text = data.eligible
+        ? "Yes! Python says you can vote. 🗳️"
+        : "Not yet. " + data.message;
+      window.Lab.showResult(out, window.Lab.escapeHtml(text), data.eligible ? "success" : "info");
+    });
+  })();
+</script>
+{% endblock %}

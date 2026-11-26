@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Input &amp; Output{% endblock %}
+{% block content %}
+
+<section class="page-hero container">
+  <span class="badge">Topic #06</span>
+  <h1>Input &amp; Output</h1>
+  <p class="lead">Read data from the user with <code>input()</code>, process it in Python and display results with <code>print()</code>.</p>
+</section>
+
+<section class="container section">
+  <div class="grid-2">
+
+    <!-- Personalized output -->
+    <div class="card tilt reveal">
+      <div class="card-head">
+        <div class="card-icon">👋</div>
+        <div>
+          <h3>Personalized output</h3>
+          <p class="muted">Enter your details and Python prints a personal summary.</p>
+        </div>
+      </div>
+      <form id="personalForm" novalidate>
+        <div class="field">
+          <label for="pName">Name</label>
+          <input id="pName" type="text" placeholder="Your name" autocomplete="off">
+        </div>
+        <div class="grid-2 tight">
+          <div class="field">
+            <label for="pAge">Age</label>
+            <input id="pAge" type="text" inputmode="numeric" placeholder="Age" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="pMarks">Marks</label>
+            <input id="pMarks" type="text" inputmode="numeric" placeholder="Marks" autocomplete="off">
+          </div>
+        </div>
+        <div class="chips" data-fill="sample-person">
+          <button type="button" class="chip" data-name="Asha" data-age="19" data-marks="78">Asha</button>
+          <button type="button" class="chip" data-name="Ravi" data-age="16" data-marks="45">Ravi</button>
+          <button type="button" class="chip" data-name="Meera" data-age="21" data-marks="93">Meera</button>
+        </div>
+        <button class="btn btn-primary" type="submit">Generate output</button>
+      </form>
+      <div id="pOut" class="result" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- Calculator -->
+    <div class="card tilt reveal">
+      <div class="card-head">
+        <div class="card-icon">🧮</div>
+        <div>
+          <h3>Simple calculator</h3>
+          <p class="muted">Supports <code>+</code> <code>-</code> <code>*</code> <code>/</code> and <code>**</code> (power).</p>
+        </div>
+      </div>
+      <form id="calcForm" novalidate>
+        <div class="field">
+          <label for="calcIn">Expression</label>
+          <input id="calcIn" type="text" placeholder="e.g. 12 * (3 + 4)" autocomplete="off">
+        </div>
+        <div class="chips" data-target="calcIn">
+          <button type="button" class="chip" data-value="12 * (3 + 4)">12 × (3 + 4)</button>
+          <button type="button" class="chip" data-value="2 ** 10">2 ** 10</button>
+          <button type="button" class="chip" data-value="100 / 8">100 / 8</button>
+        </div>
+        <button class="btn btn-primary" type="submit">Calculate</button>
+      </form>
+      <div id="calcOut" class="result" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- Student generator -->
+    <div class="card tilt reveal wide">
+      <div class="card-head">
+        <div class="card-icon">🎓</div>
+        <div>
+          <h3>Student information generator</h3>
+          <p class="muted">Creates a structured record with an ID, grade, status and voting eligibility.</p>
+        </div>
+      </div>
+      <form id="studentForm" novalidate>
+        <div class="grid-3 tight">
+          <div class="field">
+            <label for="sName">Name</label>
+            <input id="sName" type="text" placeholder="Student name" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="sAge">Age</label>
+            <input id="sAge" type="text" inputmode="numeric" placeholder="Age" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="sMarks">Marks</label>
+            <input id="sMarks" type="text" inputmode="numeric" placeholder="Marks" autocomplete="off">
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Generate record</button>
+      </form>
+      <div id="sOut" class="result" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- Live console -->
+    <div class="card reveal wide">
+      <div class="console-head">
+        <div>
+          <h3>Live console</h3>
+          <p class="muted">Every input and output is logged, like a real terminal. Type <code>help</code>. Use ↑ and ↓ to reuse commands.</p>
+        </div>
+        <button id="consoleClear" class="btn btn-ghost btn-small" type="button">Clear</button>
+      </div>
+      <div id="console" class="console" tabindex="0"></div>
+      <form id="cmdForm" class="cmd-row" novalidate>
+        <span class="prompt">&gt;&gt;&gt;</span>
+        <input id="cmd" type="text" placeholder="Type a command or expression" autocomplete="off" spellcheck="false">
+        <button class="btn btn-primary btn-small" type="submit">Run</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/io.js') }}"></script>
+{% endblock %}
