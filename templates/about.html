@@ -55,13 +55,23 @@
 <section class="container section">
   <div class="card reveal">
     <h3>Try the API directly</h3>
-    <p class="muted">Every page button is just a <code>POST</code> to one of these endpoints.</p>
+    <p class="muted">Every page button is just a request to one of these endpoints. They take a JSON
+      <code>POST</code> body, or <code>GET</code> query parameters — so these links work too.</p>
     <pre class="code-block"><code>POST /api/vote         { "age": 19 }
 POST /api/result       { "marks": 82 }
 POST /api/personalize  { "name": "Asha", "age": 19, "marks": 78 }
 POST /api/calc         { "expression": "12 * (3 + 4)" }
 POST /api/student      { "name": "Asha", "age": 19, "marks": 78 }</code></pre>
+    <div class="chips" style="margin-top:16px">
+      <a class="chip" href="/api/vote?age=19">/api/vote?age=19</a>
+      <a class="chip" href="/api/vote?age=17">/api/vote?age=17</a>
+      <a class="chip" href="/api/result?marks=82">/api/result?marks=82</a>
+      <a class="chip" href="/api/calc?expression=2 ** 10">/api/calc?expression=2 ** 10</a>
+      <a class="chip" href="/api/personalize?name=Asha&amp;age=19&amp;marks=78">/api/personalize</a>
+      <a class="chip" href="/api/student?name=Asha&amp;age=19&amp;marks=78">/api/student</a>
+    </div>
     <div class="btn-row">
+
       <a href="{{ url_for('conditionals') }}" class="btn btn-primary">Open Conditionals</a>
       <a href="{{ url_for('io_console') }}" class="btn btn-ghost">Open Input &amp; Output</a>
     </div>

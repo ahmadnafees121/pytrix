@@ -25,8 +25,15 @@ GRADE_STEPS = [(90, "A"), (75, "B"), (60, "C"), (40, "D")]
 # Helpers
 # ---------------------------------------------------------------
 def payload():
-    """Return the JSON body of a request, or an empty dict."""
-    return request.get_json(silent=True) or {}
+    """
+    Return the request parameters as a dict: the JSON body when there is one,
+    otherwise the query string. Accepting GET keeps every endpoint clickable
+    in a browser (e.g. /api/vote?age=17), which is handy while teaching.
+    """
+    data = request.get_json(silent=True)
+    if isinstance(data, dict) and data:
+        return data
+    return request.args.to_dict()
 
 
 def to_int(value):
@@ -91,7 +98,7 @@ def check_pass_fail(marks):
     return "PASS" if marks >= PASS_MARK else "FAIL"
 
 
-@app.route("/api/vote", methods=["POST"])
+@app.route("/api/vote", methods=["GET", "POST"])
 def api_vote():
     age = to_int(payload().get("age"))
     if age is None:
@@ -100,7 +107,7 @@ def api_vote():
     return jsonify({"ok": True, "age": age, **result})
 
 
-@app.route("/api/result", methods=["POST"])
+@app.route("/api/result", methods=["GET", "POST"])
 def api_result():
     marks = to_int(payload().get("marks"))
     if marks is None:
@@ -125,7 +132,7 @@ def api_result():
 # ---------------------------------------------------------------
 # Topic #06 – Input & output
 # ---------------------------------------------------------------
-@app.route("/api/personalize", methods=["POST"])
+@app.route("/api/personalize", methods=["GET", "POST"])
 def api_personalize():
     data = payload()
     name = str(data.get("name", "")).strip()
@@ -172,7 +179,7 @@ def _eval_node(node):
     raise ValueError("Only numbers and + - * / ** are allowed.")
 
 
-@app.route("/api/calc", methods=["POST"])
+@app.route("/api/calc", methods=["GET", "POST"])
 def api_calc():
     expr = str(payload().get("expression", "")).strip()
     if not expr:
@@ -186,7 +193,7 @@ def api_calc():
     return jsonify({"ok": True, "result": round(value, 6)})
 
 
-@app.route("/api/student", methods=["POST"])
+@app.route("/api/student", methods=["GET", "POST"])
 def api_student():
     data = payload()
     name = str(data.get("name", "")).strip() or "Unknown"

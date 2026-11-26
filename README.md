@@ -42,13 +42,17 @@ Open <http://127.0.0.1:5000>.
 
 ## API
 
-| Endpoint | Body | Returns |
+| Endpoint | Body or query | Returns |
 | --- | --- | --- |
-| `POST /api/vote` | `{"age": 17}` | eligibility, message, years left, `trace` |
-| `POST /api/result` | `{"marks": 82}` | pass/fail, grade, message, `trace` |
-| `POST /api/personalize` | `{"name":"Asha","age":19,"marks":78}` | printed output lines |
-| `POST /api/calc` | `{"expression":"12 * (3 + 4)"}` | result (safe `ast` parser, no `eval`) |
-| `POST /api/student` | `{"name":"Asha","age":19,"marks":78}` | generated record |
+| `/api/vote` | `{"age": 17}` | eligibility, message, years left, `trace` |
+| `/api/result` | `{"marks": 82}` | pass/fail, grade, message, `trace` |
+| `/api/personalize` | `{"name":"Asha","age":19,"marks":78}` | printed output lines |
+| `/api/calc` | `{"expression":"12 * (3 + 4)"}` | result (safe `ast` parser, no `eval`) |
+| `/api/student` | `{"name":"Asha","age":19,"marks":78}` | generated record |
+
+Each endpoint accepts `POST` with a JSON body (what the pages use) and `GET` with query
+parameters, so you can try one by typing it into the address bar:
+`/api/vote?age=17`.
 
 ## Deploy on Vercel
 
