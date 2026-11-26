@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Home{% endblock %} · Smart Python Lab</title>
+  <meta name="description" content="Learn Python input, output and conditional statements with a live Flask backend that shows every decision step by step.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><text x='16' y='22' font-size='15' text-anchor='middle' fill='%23ffffff' font-family='monospace'>&gt;_</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Mark that JS is running so .reveal elements animate instead of staying hidden. -->
+  <script>document.documentElement.classList.add("js");</script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="glow" class="cursor-glow" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="{{ url_for('home') }}">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span>Smart Python Lab</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation">☰</button>
+      <div class="nav-links" id="navLinks">
+        {% set nav_items = [
+          ("home", "Home"),
+          ("conditionals", "Conditionals"),
+          ("io_console", "Input & Output"),
+          ("about", "About")
+        ] %}
+        {% for endpoint, label in nav_items %}
+          <a href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} class="active" aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>Smart Python Lab · Topic #06 Input &amp; Output and Topic #08 Conditional statements.</p>
+    <p class="muted">Python decisions run on a <code>Flask</code> backend.</p>
+  </div>
+</footer>
+
+<div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

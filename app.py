@@ -10,7 +10,11 @@ from datetime import datetime
 
 from flask import Flask, jsonify, render_template, request
 
-app = Flask(__name__)
+# On Vercel, static files are served from the project's `public/` folder by the
+# CDN, so `static_folder` points there and `static_url_path` is empty: this makes
+# url_for('static', filename='css/style.css') resolve to /css/style.css both
+# locally (Flask serves it) and in production (the CDN serves it).
+app = Flask(__name__, static_folder="public", static_url_path="")
 
 PASS_MARK = 40
 VOTING_AGE = 18

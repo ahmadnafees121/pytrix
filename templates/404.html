@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Page not found{% endblock %}
+{% block content %}
+
+<section class="page-hero container">
+  <span class="badge">Error 404</span>
+  <h1>That page is not in this lab.</h1>
+  <p class="lead">The path you requested does not exist. In Python terms:</p>
+  <pre class="code-block"><code>if path in routes:
+    return page
+else:
+    abort(404)   # you are here</code></pre>
+  <div class="btn-row">
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Back to home</a>
+    <a href="{{ url_for('conditionals') }}" class="btn btn-ghost">Conditionals lesson</a>
+  </div>
+</section>
+
+{% endblock %}
