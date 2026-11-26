@@ -61,9 +61,16 @@ Vercel detects Flask automatically: it finds the `app = Flask(__name__)` instanc
 `vercel.json`, `/api` folder or redirect rules are needed (see
 [Flask on Vercel](https://vercel.com/docs/frameworks/backend/flask)).
 
-Push to the production branch (`main`) and Vercel deploys it, or deploy manually:
+This project is already deployed: <https://pytrix-flask.vercel.app> (project
+`pytrix-flask`, production branch `main`).
+
+To ship a new build, either redeploy from the dashboard, or run:
 
 ```bash
 npm i -g vercel
 vercel --prod
 ```
+
+Note: on this account, Git-triggered deploys are switched off
+(*Project Settings → Git → Create Deployments Immediately*), so pushing to `main`
+does not deploy by itself yet. Turn that on if you want every push to deploy.
